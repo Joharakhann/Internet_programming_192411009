@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Online Cake Ordering System</title>
+    <link rel="stylesheet" href="exp6.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Sweet Cake Shop</h1>
+    <p>Online Cake Ordering System</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#register">Register</a>
+    <a href="#login">Login</a>
+    <a href="#cakes">Cakes</a>
+    <a href="#cart">Cart</a>
+    <a href="#order">Order</a>
+    <a href="#shipping">Shipping</a>
+    <a href="#myorder">My Orders</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section id="home">
+    <h2>Welcome to Sweet Cake Shop</h2>
+    <p>Choose your favourite cake and order online.</p>
+</section>
+
+<section id="register">
+    <h2>Registration</h2>
+
+```
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<br>
+
+<button onclick="registerUser()">Register</button>
+
+<p id="registerMessage"></p>
+```
+
+</section>
+
+<section id="login">
+    <h2>Login</h2>
+
+```
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<br>
+
+<button onclick="loginUser()">Login</button>
+
+<p id="loginMessage"></p>
+```
+
+</section>
+
+<section id="cakes">
+    <h2>Search and Filter Cakes</h2>
+
+```
+<input type="text" placeholder="Search Cake">
+
+<select>
+    <option>Category</option>
+    <option>Birthday</option>
+    <option>Wedding</option>
+    <option>Anniversary</option>
+</select>
+
+<select>
+    <option>Flavor</option>
+    <option>Chocolate</option>
+    <option>Vanilla</option>
+    <option>Strawberry</option>
+    <option>Red Velvet</option>
+</select>
+
+<select>
+    <option>Price Range</option>
+    <option>Below Rs.500</option>
+    <option>Rs.500 - Rs.1000</option>
+    <option>Above Rs.1000</option>
+</select>
+
+<br>
+
+<button onclick="searchCake()">Search Cake</button>
+
+<p id="cakeMessage"></p>
+
+<h3>Available Cakes</h3>
+
+<table>
+    <tr>
+        <th>Cake</th>
+        <th>Flavor</th>
+        <th>Price</th>
+    </tr>
+
+    <tr>
+        <td>Chocolate Cake</td>
+        <td>Chocolate</td>
+        <td>Rs.600</td>
+    </tr>
+
+    <tr>
+        <td>Vanilla Cake</td>
+        <td>Vanilla</td>
+        <td>Rs.500</td>
+    </tr>
+
+    <tr>
+        <td>Red Velvet Cake</td>
+        <td>Red Velvet</td>
+        <td>Rs.1000</td>
+    </tr>
+</table>
+```
+
+</section>
+
+<section id="cart">
+    <h2>Add to Cart</h2>
+
+```
+<select>
+    <option>Select Cake</option>
+    <option>Chocolate Cake</option>
+    <option>Vanilla Cake</option>
+    <option>Red Velvet Cake</option>
+</select>
+
+<select>
+    <option>Select Size</option>
+    <option>Small</option>
+    <option>Medium</option>
+    <option>Large</option>
+</select>
+
+<input type="text" placeholder="Cake Message">
+
+<br>
+
+<button onclick="addCart()">Add to Cart</button>
+
+<p id="cartMessage"></p>
+```
+
+</section>
+
+<section id="order">
+    <h2>Place Order</h2>
+
+```
+<input type="text" placeholder="Cake Name">
+<input type="number" placeholder="Quantity">
+
+<select>
+    <option>Payment Method</option>
+    <option>UPI</option>
+    <option>Card</option>
+    <option>Cash on Delivery</option>
+</select>
+
+<br>
+
+<button onclick="placeOrder()">Place Order</button>
+
+<p id="orderMessage"></p>
+```
+
+</section>
+
+<section id="shipping">
+    <h2>Shipping Address</h2>
+
+```
+<input type="text" placeholder="Name">
+<input type="text" placeholder="Address">
+<input type="text" placeholder="City">
+<input type="text" placeholder="Pincode">
+<input type="text" placeholder="Phone Number">
+
+<br>
+
+<button onclick="saveAddress()">Save Address</button>
+
+<p id="shippingMessage"></p>
+```
+
+</section>
+
+<section id="myorder">
+    <h2>My Orders</h2>
+
+```
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>Cake</th>
+        <th>Price</th>
+        <th>Status</th>
+    </tr>
+
+    <tr>
+        <td>ORD101</td>
+        <td>Chocolate Cake</td>
+        <td>Rs.600</td>
+        <td>Shipped</td>
+    </tr>
+
+    <tr>
+        <td>ORD102</td>
+        <td>Vanilla Cake</td>
+        <td>Rs.500</td>
+        <td>Delivered</td>
+    </tr>
+</table>
+
+<br>
+
+<button onclick="shippingStatus()">View Shipping Status</button>
+
+<p id="statusMessage"></p>
+```
+
+</section>
+
+<section id="admin">
+    <h2>Admin Panel</h2>
+
+```
+<h3>Manage Products</h3>
+
+<input type="text" placeholder="Cake Name">
+<input type="text" placeholder="Description">
+<input type="number" placeholder="Price">
+
+<br>
+
+<button onclick="postCake()">Post Cake</button>
+<button>Update Cake</button>
+
+<h3>Manage Orders</h3>
+
+<input type="text" placeholder="Order ID">
+
+<select>
+    <option>Order Status</option>
+    <option>Preparing</option>
+    <option>Shipped</option>
+    <option>Delivered</option>
+</select>
+
+<br>
+
+<button onclick="updateOrder()">Update Order</button>
+
+<p id="adminMessage"></p>
+```
+
+</section>
+
+<script>
+
+function registerUser() {
+    document.getElementById("registerMessage").innerHTML =
+    "Registration successful";
+}
+
+function loginUser() {
+    document.getElementById("loginMessage").innerHTML =
+    "Login successful";
+}
+
+function searchCake() {
+    document.getElementById("cakeMessage").innerHTML =
+    "Cakes found successfully";
+}
+
+function addCart() {
+    document.getElementById("cartMessage").innerHTML =
+    "Cake added to cart";
+}
+
+function placeOrder() {
+    document.getElementById("orderMessage").innerHTML =
+    "Order placed successfully";
+}
+
+function saveAddress() {
+    document.getElementById("shippingMessage").innerHTML =
+    "Shipping address saved";
+}
+
+function shippingStatus() {
+    document.getElementById("statusMessage").innerHTML =
+    "Your order is shipped";
+}
+
+function postCake() {
+    document.getElementById("adminMessage").innerHTML =
+    "Cake added successfully";
+}
+
+function updateOrder() {
+    document.getElementById("adminMessage").innerHTML =
+    "Order status updated";
+}
+
+</script>
+
+</body>
+</html>

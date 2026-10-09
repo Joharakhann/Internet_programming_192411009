@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Online Train Reservation System</title>
+    <link rel="stylesheet" href="exp4.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Online Train Reservation System</h1>
+    <p>Railway Ticket Booking</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#register">Register</a>
+    <a href="#search">Search Train</a>
+    <a href="#booking">Book Ticket</a>
+    <a href="#pnr">PNR Status</a>
+    <a href="#cancel">Cancel Ticket</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section id="home">
+    <h2>Welcome</h2>
+    <p>Search trains and reserve your railway tickets easily.</p>
+</section>
+
+<section id="login">
+    <h2>Login</h2>
+
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+
+    <br>
+
+    <button>Login</button>
+    <button>Forgot Password</button>
+</section>
+
+<section id="register">
+    <h2>Registration</h2>
+
+    <input type="text" placeholder="Name">
+    <input type="email" placeholder="Email">
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+
+    <br>
+
+    <button>Register</button>
+</section>
+
+<section id="search">
+    <h2>Search Train</h2>
+
+    <input type="text" placeholder="Origin Station">
+    <input type="text" placeholder="Destination Station">
+
+    <input type="date">
+
+    <select>
+        <option>Select Class</option>
+        <option>AC First Class</option>
+        <option>AC 2 Tier</option>
+        <option>AC 3 Tier</option>
+        <option>Sleeper</option>
+    </select>
+
+    <br>
+
+    <button>Search Train</button>
+
+    <h3>Available Trains</h3>
+
+    <table>
+        <tr>
+            <th>Train</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Time</th>
+            <th>Seats</th>
+        </tr>
+
+        <tr>
+            <td>Chennai Express</td>
+            <td>Chennai</td>
+            <td>Bangalore</td>
+            <td>8:00 AM</td>
+            <td>25</td>
+        </tr>
+
+        <tr>
+            <td>Coimbatore Express</td>
+            <td>Chennai</td>
+            <td>Coimbatore</td>
+            <td>9:00 PM</td>
+            <td>18</td>
+        </tr>
+
+        <tr>
+            <td>Madurai Express</td>
+            <td>Chennai</td>
+            <td>Madurai</td>
+            <td>6:30 AM</td>
+            <td>30</td>
+        </tr>
+    </table>
+</section>
+
+<section id="booking">
+    <h2>Book Ticket</h2>
+
+    <input type="text" placeholder="Passenger Name">
+    <input type="number" placeholder="Age">
+    <input type="text" placeholder="Origin">
+    <input type="text" placeholder="Destination">
+
+    <input type="date">
+
+    <select>
+        <option>Select Class</option>
+        <option>AC First Class</option>
+        <option>AC 2 Tier</option>
+        <option>AC 3 Tier</option>
+        <option>Sleeper</option>
+    </select>
+
+    <select>
+        <option>Select Payment Mode</option>
+        <option>Online</option>
+        <option>Offline</option>
+    </select>
+
+    <br>
+
+    <button>Book Ticket</button>
+
+    <p>After successful payment, PNR number will be generated.</p>
+</section>
+
+<section id="pnr">
+    <h2>Check PNR Status</h2>
+
+    <input type="text" placeholder="Enter PNR Number">
+
+    <br>
+
+    <button>Check Status</button>
+
+    <p>Possible Status: Confirmed / RAC / Waiting List</p>
+</section>
+
+<section id="cancel">
+    <h2>Cancel Ticket</h2>
+
+    <input type="text" placeholder="Enter PNR Number">
+
+    <br>
+
+    <button>Cancel Ticket</button>
+
+    <p>Refund will be provided according to the cancellation rules.</p>
+</section>
+
+<section id="admin">
+    <h2>Admin Panel</h2>
+
+    <h3>Train Information</h3>
+
+    <input type="text" placeholder="Train Name">
+    <input type="text" placeholder="Origin">
+    <input type="text" placeholder="Destination">
+    <input type="number" placeholder="Available Seats">
+    <input type="number" placeholder="Fare">
+
+    <br>
+
+    <button>Add Train</button>
+    <button>Update Train</button>
+
+    <h3>PNR and Payment</h3>
+
+    <button>View PNR Details</button>
+    <button>View Payment Details</button>
+
+    <h3>Reports</h3>
+
+    <button>Generate Report</button>
+</section>
+
+</body>
+</html>

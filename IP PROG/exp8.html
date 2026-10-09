@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Hospital Appointment System</title>
+    <link rel="stylesheet" href="exp8.css">
+</head>
+
+<body>
+
+<header>
+    <h1>MedCare Hospital</h1>
+    <p>Online Doctor Appointment System</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#register">Register</a>
+    <a href="#login">Login</a>
+    <a href="#search">Search Doctor</a>
+    <a href="#booking">Book Appointment</a>
+    <a href="#checkin">Check-in</a>
+    <a href="#history">History</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section id="home">
+    <h2>Welcome to MedCare Hospital</h2>
+    <p>Search doctors and book appointments easily.</p>
+</section>
+
+<section id="register">
+    <h2>Patient Registration</h2>
+
+```
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<br>
+
+<button onclick="registerUser()">Register</button>
+
+<p id="registerMessage"></p>
+```
+
+</section>
+
+<section id="login">
+    <h2>Patient Login</h2>
+
+```
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<br>
+
+<button onclick="loginUser()">Login</button>
+
+<p id="loginMessage"></p>
+```
+
+</section>
+
+<section id="search">
+    <h2>Search Doctor</h2>
+
+```
+<input type="text" placeholder="Location">
+
+<select>
+    <option>Select Specialty</option>
+    <option>Cardiology</option>
+    <option>Dermatology</option>
+    <option>Orthopedics</option>
+    <option>General Medicine</option>
+</select>
+
+<br>
+
+<button onclick="searchDoctor()">Search Doctor</button>
+
+<h3>Available Doctors</h3>
+
+<table>
+    <tr>
+        <th>Doctor</th>
+        <th>Specialty</th>
+        <th>Location</th>
+    </tr>
+
+    <tr>
+        <td>Dr. Kumar</td>
+        <td>Cardiology</td>
+        <td>Chennai</td>
+    </tr>
+
+    <tr>
+        <td>Dr. Priya</td>
+        <td>Dermatology</td>
+        <td>Chennai</td>
+    </tr>
+
+    <tr>
+        <td>Dr. Ravi</td>
+        <td>Orthopedics</td>
+        <td>Bangalore</td>
+    </tr>
+</table>
+
+<p id="searchMessage"></p>
+```
+
+</section>
+
+<section id="booking">
+    <h2>Book Appointment</h2>
+
+```
+<input type="text" placeholder="Patient Name">
+
+<select>
+    <option>Select Doctor</option>
+    <option>Dr. Kumar</option>
+    <option>Dr. Priya</option>
+    <option>Dr. Ravi</option>
+</select>
+
+<input type="date">
+<input type="time">
+
+<br>
+
+<button onclick="bookAppointment()">Book Appointment</button>
+
+<p id="bookingMessage"></p>
+```
+
+</section>
+
+<section id="checkin">
+    <h2>Check-in Form</h2>
+
+```
+<input type="text" placeholder="Patient Name">
+<input type="text" placeholder="Appointment ID">
+<input type="text" placeholder="Symptoms">
+
+<br>
+
+<button onclick="checkIn()">Submit Check-in</button>
+
+<p id="checkinMessage"></p>
+```
+
+</section>
+
+<section id="history">
+    <h2>Past Appointments</h2>
+
+```
+<table>
+    <tr>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+
+    <tr>
+        <td>Dr. Kumar</td>
+        <td>05-10-2026</td>
+        <td>Completed</td>
+    </tr>
+
+    <tr>
+        <td>Dr. Priya</td>
+        <td>20-09-2026</td>
+        <td>Completed</td>
+    </tr>
+</table>
+```
+
+</section>
+
+<section id="feedback">
+    <h2>Doctor Feedback</h2>
+
+```
+<input type="text" placeholder="Doctor Name">
+<br>
+
+<textarea placeholder="Write your review"></textarea>
+<br>
+
+<button onclick="submitFeedback()">Submit Review</button>
+
+<p id="feedbackMessage"></p>
+```
+
+</section>
+
+<section id="admin">
+    <h2>Admin Panel</h2>
+
+```
+<h3>Manage Doctors</h3>
+
+<input type="text" placeholder="Doctor Name">
+<input type="text" placeholder="Specialty">
+
+<br>
+
+<button onclick="addDoctor()">Add Doctor</button>
+<button>Update Doctor</button>
+
+<h3>Appointment Statistics</h3>
+
+<button onclick="showStatistics()">View Statistics</button>
+
+<p id="adminMessage"></p>
+```
+
+</section>
+
+<script>
+
+function registerUser() {
+    document.getElementById("registerMessage").innerHTML =
+    "Registration successful";
+}
+
+function loginUser() {
+    document.getElementById("loginMessage").innerHTML =
+    "Login successful";
+}
+
+function searchDoctor() {
+    document.getElementById("searchMessage").innerHTML =
+    "Doctors found successfully";
+}
+
+function bookAppointment() {
+    document.getElementById("bookingMessage").innerHTML =
+    "Appointment booked successfully";
+}
+
+function checkIn() {
+    document.getElementById("checkinMessage").innerHTML =
+    "Check-in submitted successfully";
+}
+
+function submitFeedback() {
+    document.getElementById("feedbackMessage").innerHTML =
+    "Review submitted successfully";
+}
+
+function addDoctor() {
+    document.getElementById("adminMessage").innerHTML =
+    "Doctor added successfully";
+}
+
+function showStatistics() {
+    document.getElementById("adminMessage").innerHTML =
+    "Appointment statistics displayed";
+}
+
+</script>
+
+</body>
+</html>

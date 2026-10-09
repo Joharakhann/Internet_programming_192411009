@@ -1,0 +1,66 @@
+body {
+font-family: Arial;
+margin: 0;
+background: #eee8f5;
+text-align: center;
+}
+
+header {
+background: #5b2c6f;
+color: white;
+padding: 20px;
+}
+
+nav {
+background: #32104f;
+padding: 15px;
+}
+
+nav a {
+color: white;
+text-decoration: none;
+margin: 10px;
+}
+
+section {
+background: white;
+width: 80%;
+margin: 20px auto;
+padding: 20px;
+}
+
+input, select, textarea, button {
+padding: 8px;
+margin: 5px;
+}
+
+button {
+background: #8e44ad;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+button:hover {
+background: #5b2c6f;
+}
+
+table {
+margin: auto;
+border-collapse: collapse;
+}
+
+th, td {
+border: 1px solid #5b2c6f;
+padding: 10px;
+}
+
+th {
+background: #8e44ad;
+color: white;
+}
+
+textarea {
+width: 300px;
+height: 80px;
+}

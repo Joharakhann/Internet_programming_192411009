@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Flight Reservation System</title>
+    <link rel="stylesheet" href="exp5.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Online Flight Reservation System</h1>
+    <p>Flight Booking Website</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#search">Search Flight</a>
+    <a href="#booking">Book Ticket</a>
+    <a href="#payment">Payment</a>
+    <a href="#ticket">My Ticket</a>
+    <a href="#cancel">Cancel</a>
+    <a href="#feedback">Feedback</a>
+</nav>
+
+<section id="home">
+    <h2>Welcome</h2>
+    <p>Search and book your flight easily.</p>
+</section>
+
+<section id="login">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <br>
+    <button onclick="login()">Login</button>
+    <p id="loginMessage"></p>
+</section>
+
+<section id="search">
+    <h2>Search Flight</h2>
+
+```
+<input type="text" placeholder="From">
+<input type="text" placeholder="Destination">
+<input type="date">
+
+<select>
+    <option>Select Class</option>
+    <option>Economy</option>
+    <option>Business</option>
+    <option>First Class</option>
+</select>
+
+<br>
+<button onclick="searchFlight()">Search Flight</button>
+
+<h3>Available Flights</h3>
+
+<table>
+    <tr>
+        <th>Flight</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Time</th>
+        <th>Seats</th>
+    </tr>
+
+    <tr>
+        <td>SL101</td>
+        <td>Chennai</td>
+        <td>Delhi</td>
+        <td>8:00 AM</td>
+        <td>35</td>
+    </tr>
+
+    <tr>
+        <td>SL202</td>
+        <td>Chennai</td>
+        <td>Mumbai</td>
+        <td>11:30 AM</td>
+        <td>20</td>
+    </tr>
+</table>
+
+<p id="searchMessage"></p>
+```
+
+</section>
+
+<section id="booking">
+    <h2>Book Ticket</h2>
+
+```
+<input type="text" placeholder="Passenger Name">
+<input type="number" placeholder="Age">
+<input type="text" placeholder="Flight Number">
+<input type="text" placeholder="Seat Number">
+
+<br>
+
+<select>
+    <option>Select Class</option>
+    <option>Economy</option>
+    <option>Business</option>
+    <option>First Class</option>
+</select>
+
+<button onclick="bookTicket()">Book Ticket</button>
+
+<p id="bookingMessage"></p>
+```
+
+</section>
+
+<section id="payment">
+    <h2>Ticket Payment</h2>
+
+```
+<input type="text" placeholder="Ticket Number">
+<input type="number" placeholder="Amount">
+
+<select>
+    <option>Payment Method</option>
+    <option>UPI</option>
+    <option>Card</option>
+    <option>Net Banking</option>
+</select>
+
+<br>
+
+<button onclick="payment()">Make Payment</button>
+
+<p id="paymentMessage"></p>
+```
+
+</section>
+
+<section id="ticket">
+    <h2>My Ticket</h2>
+
+```
+<p>Ticket No: FL12345</p>
+<p>Flight: SL101</p>
+<p>Chennai to Delhi</p>
+<p>Status: Confirmed</p>
+
+<button onclick="printTicket()">Print Ticket</button>
+
+<p id="ticketMessage"></p>
+```
+
+</section>
+
+<section id="cancel">
+    <h2>Cancel Ticket</h2>
+
+```
+<input type="text" placeholder="Ticket Number">
+<br>
+
+<button onclick="cancelTicket()">Cancel Ticket</button>
+
+<p id="cancelMessage"></p>
+```
+
+</section>
+
+<section id="feedback">
+    <h2>Customer Feedback</h2>
+
+```
+<input type="text" placeholder="Your Name">
+<br>
+
+<textarea placeholder="Write your feedback"></textarea>
+<br>
+
+<button onclick="feedback()">Submit Feedback</button>
+
+<p id="feedbackMessage"></p>
+```
+
+</section>
+
+<script>
+
+function login() {
+    document.getElementById("loginMessage").innerHTML =
+    "Login successful";
+}
+
+function searchFlight() {
+    document.getElementById("searchMessage").innerHTML =
+    "Flights found successfully";
+}
+
+function bookTicket() {
+    document.getElementById("bookingMessage").innerHTML =
+    "Ticket booked successfully";
+}
+
+function payment() {
+    document.getElementById("paymentMessage").innerHTML =
+    "Payment successful";
+}
+
+function printTicket() {
+    document.getElementById("ticketMessage").innerHTML =
+    "Ticket is ready to print";
+}
+
+function cancelTicket() {
+    document.getElementById("cancelMessage").innerHTML =
+    "Ticket cancelled successfully";
+}
+
+function feedback() {
+    document.getElementById("feedbackMessage").innerHTML =
+    "Thank you for your feedback";
+}
+
+</script>
+
+</body>
+</html>

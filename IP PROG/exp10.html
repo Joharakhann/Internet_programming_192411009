@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>StyleHub Online Fashion</title>
+    <link rel="stylesheet" href="exp10.css">
+</head>
+
+<body>
+
+<header>
+    <h1>StyleHub</h1>
+    <p>Online Fashion Shopping</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart</a>
+    <a href="#checkout">Checkout</a>
+    <a href="#orders">Orders</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section id="home">
+    <h2>Welcome to StyleHub</h2>
+    <p>Shop clothing, footwear and accessories.</p>
+
+```
+<h3>Categories</h3>
+<p>Men | Women | Children | Footwear | Accessories</p>
+```
+
+</section>
+
+<section id="login">
+    <h2>Login</h2>
+
+```
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<br>
+
+<button onclick="loginUser()">Login</button>
+
+<p id="loginMessage"></p>
+```
+
+</section>
+
+<section id="products">
+    <h2>Search and Filter Products</h2>
+
+```
+<input type="text" placeholder="Search Product">
+
+<select>
+    <option>Category</option>
+    <option>Men</option>
+    <option>Women</option>
+    <option>Children</option>
+</select>
+
+<select>
+    <option>Product Type</option>
+    <option>Casual Wear</option>
+    <option>Formal Wear</option>
+    <option>Footwear</option>
+    <option>Accessories</option>
+</select>
+
+<br>
+
+<button onclick="searchProduct()">Search</button>
+
+<h3>Available Products</h3>
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Price</th>
+    </tr>
+
+    <tr>
+        <td>Men Shirt</td>
+        <td>Men</td>
+        <td>Rs.900</td>
+    </tr>
+
+    <tr>
+        <td>Women Dress</td>
+        <td>Women</td>
+        <td>Rs.1500</td>
+    </tr>
+
+    <tr>
+        <td>Kids Shoes</td>
+        <td>Children</td>
+        <td>Rs.800</td>
+    </tr>
+</table>
+
+<p id="productMessage"></p>
+```
+
+</section>
+
+<section id="cart">
+    <h2>Shopping Cart</h2>
+
+```
+<input type="text" placeholder="Product Name">
+<input type="number" placeholder="Quantity">
+
+<br>
+
+<button onclick="addCart()">Add to Cart</button>
+<button onclick="removeCart()">Remove Item</button>
+
+<p id="cartMessage"></p>
+```
+
+</section>
+
+<section id="checkout">
+    <h2>Checkout</h2>
+
+```
+<input type="text" placeholder="Customer Name">
+<input type="text" placeholder="Delivery Address">
+
+<select>
+    <option>Payment Method</option>
+    <option>UPI</option>
+    <option>Card</option>
+    <option>Cash on Delivery</option>
+</select>
+
+<br>
+
+<button onclick="placeOrder()">Place Order</button>
+
+<p id="checkoutMessage"></p>
+```
+
+</section>
+
+<section id="orders">
+    <h2>Order Tracking</h2>
+
+```
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>Product</th>
+        <th>Status</th>
+    </tr>
+
+    <tr>
+        <td>ORD101</td>
+        <td>Men Shirt</td>
+        <td>Shipped</td>
+    </tr>
+
+    <tr>
+        <td>ORD102</td>
+        <td>Women Dress</td>
+        <td>Delivered</td>
+    </tr>
+</table>
+
+<br>
+
+<button onclick="checkStatus()">Check Order Status</button>
+
+<p id="statusMessage"></p>
+```
+
+</section>
+
+<section id="admin">
+    <h2>Admin Panel</h2>
+
+```
+<input type="text" placeholder="Product Name">
+<input type="number" placeholder="Price">
+<input type="text" placeholder="Description">
+
+<br>
+
+<button onclick="addProduct()">Add Product</button>
+<button>Remove Product</button>
+<button>Update Product</button>
+
+<p id="adminMessage"></p>
+```
+
+</section>
+
+<script>
+
+function loginUser() {
+    document.getElementById("loginMessage").innerHTML =
+    "Login successful";
+}
+
+function searchProduct() {
+    document.getElementById("productMessage").innerHTML =
+    "Products found successfully";
+}
+
+function addCart() {
+    document.getElementById("cartMessage").innerHTML =
+    "Item added to cart";
+}
+
+function removeCart() {
+    document.getElementById("cartMessage").innerHTML =
+    "Item removed from cart";
+}
+
+function placeOrder() {
+    document.getElementById("checkoutMessage").innerHTML =
+    "Order placed successfully";
+}
+
+function checkStatus() {
+    document.getElementById("statusMessage").innerHTML =
+    "Your order is shipped";
+}
+
+function addProduct() {
+    document.getElementById("adminMessage").innerHTML =
+    "Product added successfully";
+}
+
+</script>
+
+</body>
+</html>

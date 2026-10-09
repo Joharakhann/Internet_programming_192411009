@@ -1,0 +1,61 @@
+body {
+font-family: Arial;
+margin: 0;
+background: #fff0f5;
+text-align: center;
+}
+
+header {
+background: #d63384;
+color: white;
+padding: 20px;
+}
+
+nav {
+background: #8e2157;
+padding: 15px;
+}
+
+nav a {
+color: white;
+text-decoration: none;
+margin: 10px;
+}
+
+section {
+background: #fffaf0;
+width: 80%;
+margin: 20px auto;
+padding: 20px;
+}
+
+input, select, textarea, button {
+padding: 8px;
+margin: 5px;
+}
+
+button {
+background: #d63384;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+button:hover {
+background: #8e2157;
+}
+
+table {
+margin: auto;
+border-collapse: collapse;
+}
+
+th, td {
+border: 1px solid #d63384;
+padding: 10px;
+}
+
+th {
+background: #d63384;
+color: white;
+}
