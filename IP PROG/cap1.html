@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Navigator</title>
+    <link rel="stylesheet" href="cap1.css">
+</head>
+<body>
+
+<header>
+    <h1>Smart Campus Navigator</h1>
+    <p>Find your way around campus easily</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#navigate">Navigation</a>
+    <a href="#facilities">Facilities</a>
+</nav>
+
+<section class="hero" id="home">
+    <h2>Explore Your Campus</h2>
+    <p>Find the best route to your destination.</p>
+</section>
+
+<main>
+    <section class="card" id="navigate">
+        <h2>Plan Your Route</h2>
+
+        <label for="source">Starting Location</label>
+        <select id="source">
+            <option value="Main Gate">Main Gate</option>
+            <option value="Library">Library</option>
+            <option value="Cafeteria">Cafeteria</option>
+            <option value="Computer Lab">Computer Lab</option>
+            <option value="Auditorium">Auditorium</option>
+        </select>
+
+        <label for="destination">Destination</label>
+        <select id="destination">
+            <option value="Library">Library</option>
+            <option value="Main Gate">Main Gate</option>
+            <option value="Cafeteria">Cafeteria</option>
+            <option value="Computer Lab">Computer Lab</option>
+            <option value="Auditorium">Auditorium</option>
+        </select>
+
+        <label class="check">
+            <input type="checkbox" id="accessible">
+            Prefer wheelchair-friendly routes
+        </label>
+
+        <button onclick="findRoute()">Find Route</button>
+
+        <div id="result" aria-live="polite">
+            <p>Select your locations to find a route.</p>
+        </div>
+    </section>
+
+    <section class="card" id="facilities">
+        <h2>Campus Facilities</h2>
+
+        <div class="facility">
+            <h3>Library</h3>
+            <p>Books, journals and study areas.</p>
+        </div>
+
+        <div class="facility">
+            <h3>Computer Lab</h3>
+            <p>Computers and practical learning facilities.</p>
+        </div>
+
+        <div class="facility">
+            <h3>Cafeteria</h3>
+            <p>Food and refreshments for students.</p>
+        </div>
+
+        <div class="facility">
+            <h3>Auditorium</h3>
+            <p>Events, seminars and college programmes.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Smart Campus Navigation System | Student Project</p>
+</footer>
+
+<script>
+    const routes = {
+        "Main Gate-Library": {
+            distance: 300,
+            normal: "Main Gate → Central Walkway → Library",
+            accessible: "Main Gate → Ramp Path → Library"
+        },
+        "Main Gate-Cafeteria": {
+            distance: 200,
+            normal: "Main Gate → Central Walkway → Cafeteria",
+            accessible: "Main Gate → Accessible Path → Cafeteria"
+        },
+        "Main Gate-Computer Lab": {
+            distance: 400,
+            normal: "Main Gate → Academic Block → Computer Lab",
+            accessible: "Main Gate → Ramp Path → Computer Lab"
+        },
+        "Main Gate-Auditorium": {
+            distance: 350,
+            normal: "Main Gate → Main Block → Auditorium",
+            accessible: "Main Gate → Accessible Entrance → Auditorium"
+        }
+    };
+
+    function findRoute() {
+        const source = document.getElementById("source").value;
+        const destination = document.getElementById("destination").value;
+        const accessible = document.getElementById("accessible").checked;
+        const result = document.getElementById("result");
+
+        if (source === destination) {
+            result.innerHTML =
+                "<h3>Already at your destination!</h3>" +
+                "<p>Please select a different destination.</p>";
+            return;
+        }
+
+        const key = source + "-" + destination;
+        const reverseKey = destination + "-" + source;
+
+        let route = routes[key] || routes[reverseKey];
+
+        if (!route) {
+            result.innerHTML =
+                "<h3>Route not available</h3>" +
+                "<p>Please choose another pair of locations.</p>";
+            return;
+        }
+
+        let path = accessible ? route.accessible : route.normal;
+        let distance = route.distance;
+
+        result.innerHTML = `
+            <h3>Route Found!</h3>
+            <p><strong>From:</strong> ${source}</p>
+            <p><strong>To:</strong> ${destination}</p>
+            <p><strong>Suggested Route:</strong> ${path}</p>
+            <p><strong>Distance:</strong> ${distance} metres</p>
+            <p><strong>Estimated Time:</strong>
+                ${Math.ceil(distance / 70)} minutes</p>
+            <p><strong>Route Type:</strong>
+                ${accessible ? "Accessibility-friendly (sample)" :
+                "Regular route (sample)"}</p>
+        `;
+    }
+</script>
+
+</body>
+</html>

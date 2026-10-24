@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareerConnect Job Portal</title>
+    <link rel="stylesheet" href="exp19.css">
+</head>
+<body>
+
+<header>
+    <h1>CareerConnect</h1>
+    <p>Discover Opportunities. Build Your Career.</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#jobs">Find Jobs</a>
+    <a href="#apply">Apply</a>
+    <a href="#director">Director</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section class="hero" id="home">
+    <h2>Find a Job That Matches Your Skills</h2>
+    <p>Search vacancies and apply online.</p>
+</section>
+
+<section class="stats">
+    <div class="card"><h3 id="jobCount">0</h3><p>Vacancies</p></div>
+    <div class="card"><h3 id="applicationCount">0</h3><p>Applications</p></div>
+    <div class="card"><h3 id="directorCount">0</h3><p>Directors</p></div>
+</section>
+
+<section id="jobs">
+    <h2>Search Vacancies</h2>
+    <input id="search" placeholder="Job title or company..."
+           oninput="showJobs()">
+
+    <select id="category" onchange="showJobs()">
+        <option value="All">All Categories</option>
+        <option>IT</option>
+        <option>Business</option>
+        <option>Engineering</option>
+        <option>Healthcare</option>
+    </select>
+
+    <input id="locationFilter" placeholder="Filter by location"
+           oninput="showJobs()">
+
+    <div id="jobList" class="products"></div>
+</section>
+
+<section id="apply" class="panel">
+    <h2>Applicant Registration and Application</h2>
+
+    <form id="userForm">
+        <input id="userName" placeholder="Full Name" required>
+        <input id="userEmail" type="email" placeholder="Email" required>
+        <input id="qualification" placeholder="Qualification" required>
+        <button>Register Applicant</button>
+    </form>
+    <p id="userMessage"></p>
+
+    <h3>Apply for a Vacancy</h3>
+    <form id="applicationForm">
+        <input id="applicantName" placeholder="Applicant Name" required>
+        <input id="jobId" type="number" min="1"
+               placeholder="Vacancy ID" required>
+        <input id="resume" type="file"
+               accept=".pdf,.doc,.docx" required>
+        <button>Submit Application</button>
+    </form>
+    <p id="applicationMessage"></p>
+</section>
+
+<section class="panel">
+    <h2>My Applications</h2>
+    <div id="myApplications">No applications submitted.</div>
+</section>
+
+<section id="director" class="panel">
+    <h2>Director Registration</h2>
+    <form id="directorForm">
+        <input id="directorName" placeholder="Director Name" required>
+        <input id="company" placeholder="Company Name" required>
+        <input id="directorEmail" type="email" placeholder="Email" required>
+        <button>Register Director</button>
+    </form>
+    <p id="directorMessage"></p>
+
+    <h3>Post Vacancy</h3>
+    <form id="jobForm">
+        <input id="jobTitle" placeholder="Job Title" required>
+        <input id="jobCompany" placeholder="Company Name" required>
+        <select id="jobCategory">
+            <option>IT</option>
+            <option>Business</option>
+            <option>Engineering</option>
+            <option>Healthcare</option>
+        </select>
+        <input id="jobLocation" placeholder="Job Location" required>
+        <input id="jobSalary" placeholder="Salary Range" required>
+        <textarea id="jobDescription" placeholder="Job Description"
+                  required></textarea>
+        <button>Post Vacancy</button>
+    </form>
+    <p id="jobMessage"></p>
+
+    <h3>Applications Received</h3>
+    <div id="receivedApplications"></div>
+</section>
+
+<section id="admin" class="panel">
+    <h2>Admin Dashboard</h2>
+    <button onclick="approveDirectors()">Approve All Directors</button>
+    <button onclick="showAdminReport()">View Report</button>
+    <div id="adminMessage"></div>
+</section>
+
+<footer>CareerConnect © 2026</footer>
+
+<script>
+let jobs = [
+    {id: 1, title: "Web Developer", company: "Tech Solutions",
+     category: "IT", location: "Chennai", salary: "₹3-5 LPA",
+     description: "HTML, CSS and JavaScript skills required."},
+
+    {id: 2, title: "Mechanical Engineer", company: "BuildWorks",
+     category: "Engineering", location: "Coimbatore", salary: "₹3-4 LPA",
+     description: "Knowledge of mechanical design required."},
+
+    {id: 3, title: "Business Analyst", company: "Smart Business",
+     category: "Business", location: "Bengaluru", salary: "₹4-6 LPA",
+     description: "Communication and analytical skills required."}
+];
+
+let applications = [];
+let directors = [];
+let nextJobId = 4;
+
+function showJobs() {
+    let list = document.getElementById("jobList");
+    let query = document.getElementById("search").value.toLowerCase();
+    let category = document.getElementById("category").value;
+    let location = document.getElementById("locationFilter").value.toLowerCase();
+
+    list.innerHTML = "";
+
+    jobs.filter(j =>
+        (j.title.toLowerCase().includes(query) ||
+         j.company.toLowerCase().includes(query)) &&
+        (category === "All" || j.category === category) &&
+        j.location.toLowerCase().includes(location)
+    ).forEach(j => {
+        list.innerHTML += `<div class="card">
+            <h3>${j.title}</h3>
+            <p>${j.company} | ${j.location}</p>
+            <p>Category: ${j.category}</p>
+            <p>Salary: ${j.salary}</p>
+            <p>${j.description}</p>
+            <button onclick="selectJob(${j.id})">Apply Now</button>
+        </div>`;
+    });
+
+    if (list.innerHTML === "") list.innerHTML = "No matching vacancies.";
+    document.getElementById("jobCount").innerText = jobs.length;
+}
+
+function selectJob(id) {
+    document.getElementById("jobId").value = id;
+    document.getElementById("apply").scrollIntoView();
+}
+
+document.getElementById("userForm").onsubmit = function(e) {
+    e.preventDefault();
+    userMessage.innerText =
+        "Applicant " + userName.value + " registered successfully.";
+    this.reset();
+};
+
+document.getElementById("applicationForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    let id = Number(jobId.value);
+    let job = jobs.find(j => j.id === id);
+
+    if (!job) {
+        applicationMessage.innerText = "Vacancy ID not found.";
+        return;
+    }
+
+    applications.push({
+        name: applicantName.value,
+        jobId: id,
+        title: job.title,
+        resume: resume.files[0].name,
+        status: "Submitted"
+    });
+
+    applicationMessage.innerText =
+        "Application submitted for " + job.title + ".";
+
+    showApplications();
+    this.reset();
+};
+
+function showApplications() {
+    let mine = document.getElementById("myApplications");
+    let received = document.getElementById("receivedApplications");
+
+    mine.innerHTML = "";
+    received.innerHTML = "";
+
+    applications.forEach((a, index) => {
+        mine.innerHTML += `<div class="card">
+            <p>${a.name} - ${a.title}</p>
+            <p>Status: ${a.status}</p>
+        </div>`;
+
+        received.innerHTML += `<div class="card">
+            <p>Application #${index + 1}: ${a.name}</p>
+            <p>Vacancy: ${a.title}</p>
+            <p>Resume filename: ${a.resume}</p>
+            <p>Status: ${a.status}</p>
+            <button onclick="updateApplication(${index}, 'Shortlisted')">
+                Shortlist
+            </button>
+            <button onclick="updateApplication(${index}, 'Rejected')">
+                Reject
+            </button>
+        </div>`;
+    });
+
+    if (applications.length === 0) {
+        mine.innerText = "No applications submitted.";
+        received.innerText = "No applications received.";
+    }
+
+    document.getElementById("applicationCount").innerText = applications.length;
+}
+
+function updateApplication(index, status) {
+    applications[index].status = status;
+    showApplications();
+}
+
+document.getElementById("directorForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    directors.push({
+        name: directorName.value,
+        company: company.value,
+        email: directorEmail.value,
+        approved: false
+    });
+
+    directorMessage.innerText = "Registration submitted for admin approval.";
+    document.getElementById("directorCount").innerText = directors.length;
+    this.reset();
+};
+
+document.getElementById("jobForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    jobs.push({
+        id: nextJobId++,
+        title: jobTitle.value,
+        company: jobCompany.value,
+        category: jobCategory.value,
+        location: jobLocation.value,
+        salary: jobSalary.value,
+        description: jobDescription.value
+    });
+
+    showJobs();
+    jobMessage.innerText = "Vacancy posted successfully.";
+    this.reset();
+};
+
+function approveDirectors() {
+    directors.forEach(d => d.approved = true);
+    adminMessage.innerText = "All registered directors approved in this demo.";
+}
+
+function showAdminReport() {
+    adminMessage.innerText =
+        "Vacancies: " + jobs.length +
+        " | Applications: " + applications.length +
+        " | Directors: " + directors.length;
+}
+
+showJobs();
+showApplications();
+</script>
+
+</body>
+</html>

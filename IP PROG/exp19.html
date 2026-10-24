@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VetCure - Animal Healthcare</title>
+    <link rel="stylesheet" href="exp19.css">
+</head>
+<body>
+
+<header>
+    <h1>VetCure</h1>
+    <p>Smart Veterinary Healthcare Platform</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#farmer">Farmer</a>
+    <a href="#doctor">Doctor</a>
+    <a href="#diseases">Diseases</a>
+    <a href="#reports">Reports</a>
+</nav>
+
+<section class="hero" id="home">
+    <h2>Online Animal Healthcare</h2>
+    <p>Connect farmers with veterinary doctors and manage animal health.</p>
+    <a class="button-link" href="#farmer">Consult a Doctor</a>
+</section>
+
+<section class="stats">
+    <div class="card"><h3 id="totalCases">0</h3><p>Total Cases</p></div>
+    <div class="card"><h3 id="pendingCases">0</h3><p>Pending Cases</p></div>
+    <div class="card"><h3 id="resolvedCases">0</h3><p>Resolved Cases</p></div>
+</section>
+
+<section id="farmer" class="panel">
+    <h2>Farmer Registration</h2>
+    <form id="farmerForm">
+        <input id="farmerName" placeholder="Farmer Name" required>
+        <input id="farmerEmail" type="email" placeholder="Email" required>
+        <input id="farmerArea" placeholder="Village / Area" required>
+        <select id="clinic">
+            <option value="Government">Government Clinic - Free</option>
+            <option value="Private">Private Clinic - Paid</option>
+        </select>
+        <button>Register</button>
+    </form>
+    <p id="farmerMessage"></p>
+
+    <h2>Submit Animal Symptoms</h2>
+    <form id="complaintForm">
+        <input id="animal" placeholder="Animal Type" required>
+        <select id="animalType">
+            <option>Cow</option>
+            <option>Goat</option>
+            <option>Dog</option>
+            <option>Cat</option>
+            <option>Other</option>
+        </select>
+        <textarea id="symptoms" placeholder="Describe symptoms" required></textarea>
+        <input id="caseArea" placeholder="Animal's Location" required>
+        <label>Attach image, audio or video:</label>
+        <input id="media" type="file" accept="image/*,audio/*,video/*">
+        <button>Send Complaint</button>
+    </form>
+    <p id="caseMessage"></p>
+</section>
+
+<section id="doctor" class="panel">
+    <h2>Doctor Login</h2>
+    <form id="doctorLogin">
+        <input id="doctorName" placeholder="Doctor Name" required>
+        <input id="doctorPassword" type="password" placeholder="Password" required>
+        <button>Login</button>
+    </form>
+    <p id="doctorMessage"></p>
+
+    <h2>Complaint Dashboard</h2>
+    <input id="caseSearch" placeholder="Search by ID or animal..."
+           oninput="showCases()">
+    <div id="caseList"></div>
+
+    <h2>Post Treatment Advice</h2>
+    <form id="solutionForm">
+        <input id="solutionId" type="number" min="1"
+               placeholder="Complaint ID" required>
+        <textarea id="solution" placeholder="Treatment advice"
+                  required></textarea>
+        <select id="caseStatus">
+            <option>In Progress</option>
+            <option>Resolved</option>
+        </select>
+        <button>Update Case</button>
+    </form>
+</section>
+
+<section id="diseases" class="panel">
+    <h2>Animal Disease Information</h2>
+    <input id="diseaseSearch" placeholder="Search disease..."
+           oninput="searchDisease()">
+    <div id="diseaseList">
+        <div class="card"><h3>Foot and Mouth Disease</h3>
+        <p>May cause fever and mouth or foot lesions. Seek veterinary care.</p></div>
+        <div class="card"><h3>Mastitis</h3>
+        <p>Inflammation of the udder. Requires examination by a veterinarian.</p></div>
+        <div class="card"><h3>Tick Infestation</h3>
+        <p>Ticks can irritate animals and spread disease. Ask a vet for treatment.</p></div>
+    </div>
+    <p>These are general information examples, not individual prescriptions.</p>
+</section>
+
+<section class="panel">
+    <h2>Clinic Subscription and Payment</h2>
+    <p>Government clinic subscription: Free</p>
+    <p>Private clinic demo subscription: ₹200</p>
+    <select id="paymentMethod">
+        <option>Bank Transfer</option>
+        <option>EasyPaisa</option>
+    </select>
+    <button onclick="makePayment()">Continue Payment</button>
+    <p id="paymentMessage"></p>
+</section>
+
+<section id="reports" class="panel">
+    <h2>Animal Health Report</h2>
+    <button onclick="showReport()">Analyze Report by Area</button>
+    <div id="reportList"></div>
+</section>
+
+<section class="panel">
+    <h2>Feedback</h2>
+    <form id="feedbackForm">
+        <textarea id="feedback" placeholder="Write feedback" required></textarea>
+        <button>Submit Feedback</button>
+    </form>
+    <p id="feedbackMessage"></p>
+</section>
+
+<footer>VetCure © 2026</footer>
+
+<script>
+let farmers = [];
+let cases = [];
+let nextId = 1;
+let doctorLoggedIn = false;
+
+document.getElementById("farmerForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    farmers.push({
+        name: farmerName.value,
+        email: farmerEmail.value,
+        area: farmerArea.value,
+        clinic: clinic.value
+    });
+
+    farmerMessage.innerText = "Farmer registered successfully.";
+    this.reset();
+};
+
+document.getElementById("complaintForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    if (farmers.length === 0) {
+        caseMessage.innerText = "Please register as a farmer first.";
+        return;
+    }
+
+    let file = document.getElementById("media").files[0];
+
+    cases.push({
+        id: nextId++,
+        farmer: farmers[farmers.length - 1].name,
+        animal: animalType.value,
+        symptoms: symptoms.value,
+        area: caseArea.value,
+        file: file ? file.name : "No attachment",
+        solution: "Waiting for doctor",
+        status: "Pending"
+    });
+
+    caseMessage.innerText = "Complaint submitted successfully.";
+    this.reset();
+    showCases();
+    updateStats();
+};
+
+document.getElementById("doctorLogin").onsubmit = function(e) {
+    e.preventDefault();
+    doctorLoggedIn = true;
+    doctorMessage.innerText = "Demo doctor login successful.";
+    showCases();
+};
+
+function showCases() {
+    let query = document.getElementById("caseSearch").value.toLowerCase();
+    let list = document.getElementById("caseList");
+    list.innerHTML = "";
+
+    cases.filter(c =>
+        String(c.id).includes(query) ||
+        c.animal.toLowerCase().includes(query)
+    ).forEach(c => {
+        list.innerHTML += `<div class="card">
+            <h3>Case #${c.id} - ${c.animal}</h3>
+            <p>Farmer: ${c.farmer} | Area: ${c.area}</p>
+            <p>Symptoms: ${c.symptoms}</p>
+            <p>Attachment name: ${c.file}</p>
+            <p>Status: <strong>${c.status}</strong></p>
+            <p>Doctor's advice: ${c.solution}</p>
+        </div>`;
+    });
+}
+
+document.getElementById("solutionForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    if (!doctorLoggedIn) {
+        doctorMessage.innerText = "Please log in as a doctor first.";
+        return;
+    }
+
+    let c = cases.find(c => c.id === Number(solutionId.value));
+
+    if (!c) {
+        doctorMessage.innerText = "Complaint ID not found.";
+        return;
+    }
+
+    c.solution = solution.value;
+    c.status = caseStatus.value;
+    doctorMessage.innerText = "Case updated successfully.";
+    showCases();
+    updateStats();
+    this.reset();
+};
+
+function updateStats() {
+    totalCases.innerText = cases.length;
+    pendingCases.innerText = cases.filter(c => c.status === "Pending").length;
+    resolvedCases.innerText = cases.filter(c => c.status === "Resolved").length;
+}
+
+function searchDisease() {
+    let q = diseaseSearch.value.toLowerCase();
+    document.querySelectorAll("#diseaseList .card").forEach(card => {
+        card.style.display = card.innerText.toLowerCase().includes(q) ? "" : "none";
+    });
+}
+
+function makePayment() {
+    let clinicType = document.getElementById("clinic").value;
+    paymentMessage.innerText = clinicType === "Government"
+        ? "Government clinic subscription is free."
+        : "Demo payment selected through " + paymentMethod.value +
+          ". No money was transferred.";
+}
+
+function showReport() {
+    let areas = {};
+
+    cases.forEach(c => {
+        areas[c.area] = (areas[c.area] || 0) + 1;
+    });
+
+    reportList.innerHTML = "<h3>Cases by Area</h3>";
+
+    for (let area in areas) {
+        reportList.innerHTML += `<p>${area}: ${areas[area]} reported case(s)</p>`;
+    }
+
+    if (cases.length === 0) reportList.innerHTML += "<p>No cases recorded yet.</p>";
+}
+
+document.getElementById("feedbackForm").onsubmit = function(e) {
+    e.preventDefault();
+    feedbackMessage.innerText = "Thank you for your feedback.";
+    this.reset();
+};
+</script>
+
+</body>
+</html>

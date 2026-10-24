@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f7f4;
+    color: #26352a;
+}
+
+header {
+    background: #246b45;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+nav {
+    background: #17472d;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 12px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+section {
+    padding: 30px 8%;
+    margin: 20px auto;
+}
+
+.hero {
+    background: #d9eee0;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h2 {
+    font-size: 32px;
+}
+
+.link-button {
+    display: inline-block;
+    background: #246b45;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px #00000012;
+}
+
+input {
+    padding: 12px;
+    margin: 7px;
+    border: 1px solid #ccd8ce;
+    border-radius: 5px;
+}
+
+button {
+    background: #246b45;
+    color: white;
+    padding: 11px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover, .link-button:hover {
+    background: #17472d;
+}
+
+#login, #customer, #agent, #admin {
+    background: white;
+    border-radius: 10px;
+}
+
+#details {
+    background: #e8f5e9;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+footer {
+    background: #17472d;
+    color: white;
+    text-align: center;
+    padding: 18px;
+}
+
+@media (max-width: 600px) {
+    nav a {
+        display: inline-block;
+        margin: 7px;
+    }
+
+    section {
+        padding: 20px 5%;
+    }
+
+    input {
+        max-width: 100%;
+    }
+}

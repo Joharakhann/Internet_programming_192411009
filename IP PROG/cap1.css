@@ -1,0 +1,172 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f6fc;
+    color: #243247;
+    line-height: 1.6;
+}
+
+header {
+    background: #173b68;
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+nav {
+    background: #102b4c;
+    padding: 13px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 18px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #91d5ff;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 15px;
+    background: #dcecff;
+}
+
+.hero h2 {
+    color: #173b68;
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+main {
+    width: 90%;
+    max-width: 850px;
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px #00000012;
+}
+
+.card h2 {
+    color: #173b68;
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin: 14px 0 6px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc9d8;
+    border-radius: 6px;
+    background: white;
+    font-size: 15px;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    margin: 18px 0;
+}
+
+.check input {
+    width: 17px;
+    height: 17px;
+}
+
+button {
+    background: #1769aa;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #104b7d;
+}
+
+#result {
+    background: #edf6ff;
+    border-left: 4px solid #1769aa;
+    border-radius: 6px;
+    padding: 18px;
+    margin-top: 22px;
+    overflow-wrap: anywhere;
+}
+
+#result h3 {
+    color: #1769aa;
+    margin-bottom: 10px;
+}
+
+.facility {
+    background: #f6f9fd;
+    border: 1px solid #dbe5f0;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 7px;
+}
+
+.facility h3 {
+    color: #1769aa;
+    margin-bottom: 4px;
+}
+
+footer {
+    background: #173b68;
+    color: white;
+    text-align: center;
+    padding: 18px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 23px;
+    }
+
+    nav a {
+        margin: 0 7px;
+        font-size: 14px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}

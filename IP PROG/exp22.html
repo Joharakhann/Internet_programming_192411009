@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartWaste Management</title>
+    <link rel="stylesheet" href="exp19.css">
+</head>
+<body>
+
+<header>
+    <h1>SmartWaste</h1>
+    <p>Cleaner Cities Through Smart Waste Management</p>
+</header>
+
+<nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#bins">Garbage Bins</a>
+    <a href="#public">Public Complaints</a>
+    <a href="#driver">Driver</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section class="hero">
+    <h2>Waste Collection Dashboard</h2>
+    <p>Monitor bins, complaints and collection activities.</p>
+</section>
+
+<section id="dashboard" class="stats">
+    <div class="card"><h3 id="binCount">0</h3><p>Total Bins</p></div>
+    <div class="card"><h3 id="fullCount">0</h3><p>Bins Needing Collection</p></div>
+    <div class="card"><h3 id="complaintCount">0</h3><p>Public Complaints</p></div>
+</section>
+
+<section id="bins" class="panel">
+    <h2>Garbage Bin Status</h2>
+
+    <input id="binSearch" placeholder="Search by location..."
+           oninput="showBins()">
+
+    <div id="binList" class="products"></div>
+</section>
+
+<section id="public" class="panel">
+    <h2>Public Registration and Complaint</h2>
+
+    <form id="publicForm">
+        <input id="publicName" placeholder="Your Name" required>
+        <input id="publicArea" placeholder="Area / Street" required>
+        <textarea id="complaintText"
+                  placeholder="Describe the waste problem" required></textarea>
+        <button>Submit Complaint</button>
+    </form>
+
+    <p id="publicMessage"></p>
+    <div id="publicList"></div>
+</section>
+
+<section id="driver" class="panel">
+    <h2>Driver Dashboard</h2>
+
+    <label>Select Assigned Route</label>
+    <select id="route">
+        <option>Route A - Main Street to Dumping Site</option>
+        <option>Route B - Market Road to Dumping Site</option>
+        <option>Route C - Residential Area to Dumping Site</option>
+    </select>
+
+    <input id="driverName" placeholder="Driver Name" required>
+    <input id="binId" type="number" min="1" placeholder="Bin ID">
+    <input id="load" type="number" min="0" max="100"
+           placeholder="Collected Load (%)">
+
+    <button onclick="updateCollection()">Update Collection</button>
+    <p id="driverMessage"></p>
+
+    <h3>Daily Work Updates</h3>
+    <div id="driverList"></div>
+</section>
+
+<section id="admin" class="panel">
+    <h2>Admin Dashboard - Manage Bins</h2>
+
+    <form id="binForm">
+        <input id="newLocation" placeholder="Bin Location" required>
+        <input id="capacity" type="number" min="1"
+               placeholder="Bin Capacity (kg)" required>
+        <input id="fillLevel" type="number" min="0" max="100"
+               placeholder="Fill Level (%)" required>
+        <button>Add Garbage Bin</button>
+    </form>
+
+    <h3>Assign Route</h3>
+    <input id="assignBin" type="number" min="1" placeholder="Bin ID">
+    <select id="assignedRoute">
+        <option>Route A</option>
+        <option>Route B</option>
+        <option>Route C</option>
+    </select>
+    <button onclick="assignRoute()">Assign Route</button>
+
+    <button onclick="showReport()">Generate Waste Report</button>
+    <div id="adminMessage"></div>
+</section>
+
+<footer>SmartWaste © 2026</footer>
+
+<script>
+let bins = [
+    {id: 1, location: "Main Street", capacity: 100, fill: 85, route: "Route A"},
+    {id: 2, location: "Market Road", capacity: 150, fill: 45, route: "Route B"},
+    {id: 3, location: "Residential Area", capacity: 120, fill: 95, route: "Route C"}
+];
+
+let complaints = [];
+let collectionLogs = [];
+let nextBinId = 4;
+
+function showBins() {
+    let list = document.getElementById("binList");
+    let query = document.getElementById("binSearch").value.toLowerCase();
+
+    list.innerHTML = "";
+
+    bins.filter(b => b.location.toLowerCase().includes(query))
+        .forEach(b => {
+            let status = b.fill >= 80 ? "Collection Needed" : "Normal";
+
+            list.innerHTML += `<div class="card">
+                <h3>Bin #${b.id}: ${b.location}</h3>
+                <p>Capacity: ${b.capacity} kg</p>
+                <p>Fill Level: ${b.fill}%</p>
+                <p>Route: ${b.route}</p>
+                <p>Status: <strong>${status}</strong></p>
+                <progress value="${b.fill}" max="100"></progress>
+            </div>`;
+        });
+
+    document.getElementById("binCount").innerText = bins.length;
+    document.getElementById("fullCount").innerText =
+        bins.filter(b => b.fill >= 80).length;
+    document.getElementById("complaintCount").innerText = complaints.length;
+}
+
+document.getElementById("publicForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    complaints.push({
+        id: complaints.length + 1,
+        name: document.getElementById("publicName").value,
+        area: document.getElementById("publicArea").value,
+        text: document.getElementById("complaintText").value,
+        status: "Pending"
+    });
+
+    document.getElementById("publicMessage").innerText =
+        "Complaint submitted successfully.";
+
+    showComplaints();
+    showBins();
+    this.reset();
+};
+
+function showComplaints() {
+    let list = document.getElementById("publicList");
+    list.innerHTML = "<h3>Complaint Status</h3>";
+
+    complaints.forEach(c => {
+        list.innerHTML += `<div class="card">
+            <p>Complaint #${c.id}: ${c.area}</p>
+            <p>${c.text}</p>
+            <p>Status: ${c.status}</p>
+        </div>`;
+    });
+}
+
+document.getElementById("binForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    bins.push({
+        id: nextBinId++,
+        location: document.getElementById("newLocation").value,
+        capacity: Number(document.getElementById("capacity").value),
+        fill: Number(document.getElementById("fillLevel").value),
+        route: "Unassigned"
+    });
+
+    showBins();
+    document.getElementById("adminMessage").innerText =
+        "Garbage bin added successfully.";
+    this.reset();
+};
+
+function assignRoute() {
+    let id = Number(document.getElementById("assignBin").value);
+    let bin = bins.find(b => b.id === id);
+
+    if (!bin) {
+        document.getElementById("adminMessage").innerText =
+            "Bin ID not found.";
+        return;
+    }
+
+    bin.route = document.getElementById("assignedRoute").value;
+    document.getElementById("adminMessage").innerText =
+        "Route assigned to Bin #" + id + ".";
+    showBins();
+}
+
+function updateCollection() {
+    let id = Number(document.getElementById("binId").value);
+    let bin = bins.find(b => b.id === id);
+    let load = Number(document.getElementById("load").value);
+
+    if (!bin || document.getElementById("load").value === "" ||
+        load < 0 || load > 100) {
+        document.getElementById("driverMessage").innerText =
+            "Enter a valid bin ID and load percentage.";
+        return;
+    }
+
+    bin.fill = Math.max(0, bin.fill - load);
+
+    collectionLogs.push({
+        driver: document.getElementById("driverName").value,
+        bin: id,
+        route: document.getElementById("route").value,
+        collected: load
+    });
+
+    document.getElementById("driverMessage").innerText =
+        "Collection updated for Bin #" + id + ".";
+
+    showBins();
+    showDriverLogs();
+}
+
+function showDriverLogs() {
+    let list = document.getElementById("driverList");
+    list.innerHTML = "";
+
+    collectionLogs.forEach(log => {
+        list.innerHTML += `<p>${log.driver} | Bin #${log.bin} |
+            ${log.route} | Load collected: ${log.collected}%</p>`;
+    });
+}
+
+function showReport() {
+    let totalCapacity = bins.reduce((sum, b) => sum + b.capacity, 0);
+    let totalFill = bins.reduce((sum, b) =>
+        sum + b.capacity * b.fill / 100, 0);
+
+    document.getElementById("adminMessage").innerHTML =
+        "<h3>Waste Report</h3>" +
+        "<p>Total Bins: " + bins.length + "</p>" +
+        "<p>Total Capacity: " + totalCapacity + " kg</p>" +
+        "<p>Estimated Waste: " + totalFill.toFixed(1) + " kg</p>" +
+        "<p>Complaints: " + complaints.length + "</p>" +
+        "<p>Collection Updates: " + collectionLogs.length + "</p>";
+}
+
+showBins();
+showComplaints();
+</script>
+
+</body>
+</html>

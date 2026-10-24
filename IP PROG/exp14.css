@@ -1,0 +1,88 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f8f3;
+    color: #333;
+}
+
+header {
+    background: #267653;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+nav {
+    background: #174b36;
+    text-align: center;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 15px;
+}
+
+.hero {
+    background: #d5eddf;
+    text-align: center;
+    padding: 35px;
+}
+
+section {
+    padding: 20px;
+}
+
+h2 {
+    color: #267653;
+}
+
+input, select {
+    padding: 10px;
+    margin: 6px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.card, .panel {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px #ddd;
+}
+
+.card {
+    text-align: center;
+}
+
+button {
+    background: #267653;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    background: #174b36;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+@media (max-width: 600px) {
+    nav a {
+        display: inline-block;
+        margin: 7px;
+    }
+}

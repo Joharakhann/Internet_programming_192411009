@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RentRide</title>
+    <link rel="stylesheet" href="exp19.css">
+</head>
+<body>
+
+<header>
+    <h1>RentRide</h1>
+    <p>Smart and Easy Vehicle Rental</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#vehicles">Vehicles</a>
+    <a href="#booking">Book Vehicle</a>
+    <a href="#history">My Bookings</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section class="hero" id="home">
+    <h2>Find Your Perfect Ride</h2>
+    <p>Choose your vehicle, location and rental duration.</p>
+</section>
+
+<section class="stats">
+    <div class="card"><h3 id="vehicleCount">0</h3><p>Vehicles</p></div>
+    <div class="card"><h3 id="bookingCount">0</h3><p>Bookings</p></div>
+    <div class="card"><h3 id="approvedCount">0</h3><p>Approved</p></div>
+</section>
+
+<section id="vehicles">
+    <h2>Search Vehicles</h2>
+
+    <input id="search" placeholder="Search vehicle..."
+           oninput="showVehicles()">
+
+    <select id="type" onchange="showVehicles()">
+        <option value="All">All Types</option>
+        <option>Car</option>
+        <option>SUV</option>
+        <option>Truck</option>
+    </select>
+
+    <input id="locationFilter" placeholder="Filter by location"
+           oninput="showVehicles()">
+
+    <input id="maxPrice" type="number" min="0"
+           placeholder="Maximum daily price" oninput="showVehicles()">
+
+    <div id="vehicleList" class="products"></div>
+</section>
+
+<section id="booking" class="panel">
+    <h2>Vehicle Booking</h2>
+    <p id="selectedVehicle">Select a vehicle from the list first.</p>
+
+    <form id="bookingForm">
+        <input id="customerName" placeholder="Full Name" required>
+        <input id="phone" type="tel" placeholder="Contact Number" required>
+        <input id="address" placeholder="Address" required>
+        <label>Rental Start Date</label>
+        <input id="startDate" type="date" required>
+        <label>Number of Days</label>
+        <input id="days" type="number" min="1" max="30"
+               value="1" required>
+        <select id="payment">
+            <option>Bank Transfer (Demo)</option>
+            <option>Card (Demo)</option>
+        </select>
+        <button>Submit Booking</button>
+    </form>
+
+    <p id="bookingMessage"></p>
+</section>
+
+<section id="history" class="panel">
+    <h2>Booking History</h2>
+    <input id="historySearch" placeholder="Search by name or booking ID"
+           oninput="showBookings()">
+    <div id="bookingList"></div>
+</section>
+
+<section id="admin" class="panel">
+    <h2>Admin Dashboard - Add Vehicle</h2>
+
+    <form id="vehicleForm">
+        <input id="newName" placeholder="Vehicle Name" required>
+        <select id="newType">
+            <option>Car</option>
+            <option>SUV</option>
+            <option>Truck</option>
+        </select>
+        <input id="newPrice" type="number" min="1"
+               placeholder="Price per day" required>
+        <input id="newLocation" placeholder="Location" required>
+        <button>Add Vehicle</button>
+    </form>
+
+    <h2>Manage Booking</h2>
+    <input id="manageId" type="number" min="1"
+           placeholder="Booking ID">
+    <select id="newStatus">
+        <option>Approved</option>
+        <option>Pending</option>
+        <option>Cancelled</option>
+    </select>
+    <button onclick="updateBooking()">Update Booking Status</button>
+    <p id="adminMessage"></p>
+</section>
+
+<footer>RentRide © 2026</footer>
+
+<script>
+let vehicles = [
+    {id: 1, name: "City Car", type: "Car", price: 2000, location: "Chennai"},
+    {id: 2, name: "Family SUV", type: "SUV", price: 3500, location: "Bengaluru"},
+    {id: 3, name: "Delivery Truck", type: "Truck", price: 5000, location: "Chennai"},
+    {id: 4, name: "Compact Car", type: "Car", price: 1500, location: "Coimbatore"}
+];
+
+let bookings = [];
+let selectedId = null;
+let nextBookingId = 1;
+
+function showVehicles() {
+    let list = document.getElementById("vehicleList");
+    let query = document.getElementById("search").value.toLowerCase();
+    let type = document.getElementById("type").value;
+    let location = document.getElementById("locationFilter").value.toLowerCase();
+    let max = document.getElementById("maxPrice").value;
+
+    list.innerHTML = "";
+
+    let filtered = vehicles.filter(v =>
+        v.name.toLowerCase().includes(query) &&
+        (type === "All" || v.type === type) &&
+        v.location.toLowerCase().includes(location) &&
+        (max === "" || v.price <= Number(max))
+    );
+
+    filtered.forEach(v => {
+        list.innerHTML += `<div class="card">
+            <h3>${v.name}</h3>
+            <p>Type: ${v.type}</p>
+            <p>Location: ${v.location}</p>
+            <h3>₹${v.price} / day</h3>
+            <button onclick="selectVehicle(${v.id})">Select Vehicle</button>
+        </div>`;
+    });
+
+    if (filtered.length === 0) list.innerHTML = "<p>No vehicles found.</p>";
+
+    document.getElementById("vehicleCount").innerText = vehicles.length;
+}
+
+function selectVehicle(id) {
+    selectedId = id;
+    let v = vehicles.find(v => v.id === id);
+
+    document.getElementById("selectedVehicle").innerText =
+        v.name + " selected - ₹" + v.price + " per day.";
+
+    document.getElementById("booking").scrollIntoView();
+    calculateTotal();
+}
+
+function calculateTotal() {
+    let v = vehicles.find(v => v.id === selectedId);
+    if (!v) return;
+
+    let days = Number(document.getElementById("days").value) || 1;
+
+    document.getElementById("bookingMessage").innerText =
+        "Estimated rental cost: ₹" + (v.price * days);
+}
+
+document.getElementById("days").addEventListener("input", calculateTotal);
+
+document.getElementById("bookingForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    let v = vehicles.find(v => v.id === selectedId);
+
+    if (!v) {
+        bookingMessage.innerText = "Please select a vehicle first.";
+        return;
+    }
+
+    let date = document.getElementById("startDate").value;
+
+    if (date < new Date().toISOString().split("T")[0]) {
+        bookingMessage.innerText = "Choose today or a future date.";
+        return;
+    }
+
+    let days = Number(document.getElementById("days").value);
+
+    bookings.push({
+        id: nextBookingId++,
+        name: document.getElementById("customerName").value,
+        phone: document.getElementById("phone").value,
+        vehicle: v.name,
+        date: date,
+        days: days,
+        total: v.price * days,
+        payment: document.getElementById("payment").value,
+        status: "Pending"
+    });
+
+    bookingMessage.innerText =
+        "Booking submitted. Estimated total: ₹" + (v.price * days) +
+        ". Payment is not processed.";
+
+    showBookings();
+    this.reset();
+    selectedId = null;
+    selectedVehicle.innerText = "Select a vehicle from the list first.";
+};
+
+function showBookings() {
+    let list = document.getElementById("bookingList");
+    let query = document.getElementById("historySearch").value.toLowerCase();
+    list.innerHTML = "";
+
+    bookings.filter(b =>
+        String(b.id).includes(query) ||
+        b.name.toLowerCase().includes(query)
+    ).forEach(b => {
+        list.innerHTML += `<div class="card">
+            <h3>Booking #${b.id}: ${b.vehicle}</h3>
+            <p>Customer: ${b.name}</p>
+            <p>Date: ${b.date} | Days: ${b.days}</p>
+            <p>Total: ₹${b.total}</p>
+            <p>Status: <strong>${b.status}</strong></p>
+        </div>`;
+    });
+
+    if (bookings.length === 0) list.innerHTML = "No bookings yet.";
+
+    document.getElementById("bookingCount").innerText = bookings.length;
+    document.getElementById("approvedCount").innerText =
+        bookings.filter(b => b.status === "Approved").length;
+}
+
+document.getElementById("vehicleForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    vehicles.push({
+        id: Math.max(0, ...vehicles.map(v => v.id)) + 1,
+        name: document.getElementById("newName").value,
+        type: document.getElementById("newType").value,
+        price: Number(document.getElementById("newPrice").value),
+        location: document.getElementById("newLocation").value
+    });
+
+    showVehicles();
+    adminMessage.innerText = "Vehicle added successfully.";
+    this.reset();
+};
+
+function updateBooking() {
+    let id = Number(document.getElementById("manageId").value);
+    let b = bookings.find(b => b.id === id);
+
+    if (!b) {
+        adminMessage.innerText = "Booking ID not found.";
+        return;
+    }
+
+    b.status = document.getElementById("newStatus").value;
+    adminMessage.innerText = "Booking status updated.";
+    showBookings();
+}
+
+showVehicles();
+showBookings();
+</script>
+
+</body>
+</html>

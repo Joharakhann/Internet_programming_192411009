@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>InsureEasy - Insurance Management</title>
+    <link rel="stylesheet" href="exp12.css">
+</head>
+<body>
+
+<header>
+    <h1>InsureEasy</h1>
+    <p>Simple and Smart Insurance Management</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#policies">Policies</a>
+    <a href="#customer">Customer</a>
+    <a href="#agent">Agent</a>
+    <a href="#admin">Admin</a>
+</nav>
+
+<section id="home" class="hero">
+    <h2>Protect What Matters Most</h2>
+    <p>Compare policies and manage your insurance in one place.</p>
+    <a href="#policies" class="link-button">Explore Policies</a>
+</section>
+
+<section id="login">
+    <h2>Customer Login</h2>
+
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+</section>
+
+<section id="policies">
+    <h2>Our Insurance Policies</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Health Insurance</h3>
+            <p>Support for medical expenses.</p>
+            <h3>Rs. 5,000/year</h3>
+            <button onclick="selectPolicy('Health Insurance', 5000)">
+                Select Policy
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Vehicle Insurance</h3>
+            <p>Protection for your vehicle.</p>
+            <h3>Rs. 3,000/year</h3>
+            <button onclick="selectPolicy('Vehicle Insurance', 3000)">
+                Select Policy
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Home Insurance</h3>
+            <p>Protection for your home.</p>
+            <h3>Rs. 4,000/year</h3>
+            <button onclick="selectPolicy('Home Insurance', 4000)">
+                Select Policy
+            </button>
+        </div>
+    </div>
+
+    <p id="policyMsg"></p>
+</section>
+
+<section id="customer">
+    <h2>Customer Details</h2>
+
+    <input id="customerName" placeholder="Customer Name">
+    <input id="customerEmail" type="email" placeholder="Email Address">
+
+    <button onclick="addCustomer()">Save Customer</button>
+    <p id="customerMsg"></p>
+
+    <h3>Premium Calculator</h3>
+    <input id="premium" type="number" placeholder="Annual Premium">
+    <input id="years" type="number" placeholder="Number of Years">
+
+    <button onclick="calculatePremium()">Calculate Premium</button>
+    <h3 id="premiumResult"></h3>
+
+    <h3>Renewal Reminder</h3>
+    <label for="renewalDate">Renewal Date:</label>
+    <input id="renewalDate" type="date">
+
+    <button onclick="checkRenewal()">Check Renewal</button>
+    <p id="renewalMsg"></p>
+</section>
+
+<section id="agent">
+    <h2>Agent Registration</h2>
+
+    <input id="agentName" placeholder="Agent Name">
+    <input id="agentEmail" type="email" placeholder="Email Address">
+
+    <button onclick="registerAgent()">Register Agent</button>
+    <p id="agentMsg"></p>
+</section>
+
+<section id="admin">
+    <h2>Admin Dashboard</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Customers</h3>
+            <p id="customerCount">0</p>
+            <button onclick="viewCustomers()">View Customers</button>
+        </div>
+
+        <div class="card">
+            <h3>Agents</h3>
+            <p id="agentCount">0</p>
+            <button onclick="viewAgents()">View Agents</button>
+        </div>
+
+        <div class="card">
+            <h3>Selected Policy</h3>
+            <p id="selectedPolicy">None</p>
+            <button onclick="approvePolicy()">Approve Policy</button>
+        </div>
+    </div>
+
+    <p id="adminMsg"></p>
+    <div id="details"></div>
+</section>
+
+<footer>
+    <p>InsureEasy | Insurance Management System</p>
+</footer>
+
+<script>
+var customers = [];
+var agents = [];
+var policyName = "";
+var policyPrice = 0;
+
+function login() {
+    var user = document.getElementById("username").value;
+    var pass = document.getElementById("password").value;
+
+    if (user === "" || pass === "") {
+        document.getElementById("loginMsg").innerHTML =
+            "Please enter username and password.";
+    } else {
+        document.getElementById("loginMsg").innerHTML =
+            "Demo login successful. Welcome " + user + "!";
+    }
+}
+
+function selectPolicy(name, price) {
+    policyName = name;
+    policyPrice = price;
+
+    document.getElementById("policyMsg").innerHTML =
+        name + " selected successfully.";
+
+    document.getElementById("selectedPolicy").innerHTML = name;
+
+    document.getElementById("premium").value = price;
+}
+
+function addCustomer() {
+    var name = document.getElementById("customerName").value;
+    var email = document.getElementById("customerEmail").value;
+
+    if (name === "" || email === "") {
+        document.getElementById("customerMsg").innerHTML =
+            "Please enter customer name and email.";
+        return;
+    }
+
+    customers.push({name: name, email: email});
+
+    document.getElementById("customerCount").innerHTML =
+        customers.length;
+
+    document.getElementById("customerMsg").innerHTML =
+        "Customer details saved successfully.";
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerEmail").value = "";
+}
+
+function calculatePremium() {
+    var amount = Number(document.getElementById("premium").value);
+    var years = Number(document.getElementById("years").value);
+
+    if (amount <= 0 || years <= 0) {
+        document.getElementById("premiumResult").innerHTML =
+            "Enter a valid premium and number of years.";
+        return;
+    }
+
+    var total = amount * years;
+
+    document.getElementById("premiumResult").innerHTML =
+        "Total estimated premium: Rs. " + total.toLocaleString("en-IN");
+}
+
+function checkRenewal() {
+    var date = document.getElementById("renewalDate").value;
+
+    if (date === "") {
+        document.getElementById("renewalMsg").innerHTML =
+            "Please select a renewal date.";
+        return;
+    }
+
+    document.getElementById("renewalMsg").innerHTML =
+        "Selected renewal date: " + date;
+}
+
+function registerAgent() {
+    var name = document.getElementById("agentName").value;
+    var email = document.getElementById("agentEmail").value;
+
+    if (name === "" || email === "") {
+        document.getElementById("agentMsg").innerHTML =
+            "Please enter agent name and email.";
+        return;
+    }
+
+    agents.push({name: name, email: email});
+
+    document.getElementById("agentCount").innerHTML =
+        agents.length;
+
+    document.getElementById("agentMsg").innerHTML =
+        "Agent registered and awaiting approval.";
+
+    document.getElementById("agentName").value = "";
+    document.getElementById("agentEmail").value = "";
+}
+
+function viewCustomers() {
+    var output = "";
+
+    customers.forEach(function(c) {
+        output += "<p>" + c.name + " - " + c.email + "</p>";
+    });
+
+    document.getElementById("details").innerHTML =
+        output || "No customers registered.";
+
+    document.getElementById("adminMsg").innerHTML =
+        "Customer list";
+}
+
+function viewAgents() {
+    var output = "";
+
+    agents.forEach(function(a) {
+        output += "<p>" + a.name + " - " + a.email +
+                  " - Pending approval</p>";
+    });
+
+    document.getElementById("details").innerHTML =
+        output || "No agents registered.";
+
+    document.getElementById("adminMsg").innerHTML =
+        "Agent list";
+}
+
+function approvePolicy() {
+    document.getElementById("adminMsg").innerHTML =
+        policyName === "" ?
+        "Please select a policy first." :
+        policyName + " selected for demo approval.";
+}
+</script>
+
+</body>
+</html>

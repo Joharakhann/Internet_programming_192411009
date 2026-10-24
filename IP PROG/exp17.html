@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VoteOnline</title>
+    <link rel="stylesheet" href="exp17.css">
+</head>
+<body>
+
+<header>
+    <h1>VoteOnline</h1>
+    <p>Your Vote, Your Choice</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#voter">Voting</a>
+    <a href="#admin">Admin</a>
+    <a href="#results">Results</a>
+</nav>
+
+<section class="hero" id="home">
+    <h2>Online Voting System</h2>
+    <p>Explore candidates and cast a demo vote.</p>
+</section>
+
+<section id="voter" class="panel">
+    <h2>Voter Login</h2>
+    <form onsubmit="login(event)">
+        <input id="voterId" placeholder="Voter ID" required>
+        <button>Login</button>
+    </form>
+    <p id="loginMessage">Please log in to vote.</p>
+</section>
+
+<section class="panel">
+    <h2>OTP Verification (Demo)</h2>
+    <button onclick="generateOTP()">Generate OTP</button>
+    <p id="otpDisplay"></p>
+
+    <input id="otpInput" placeholder="Enter OTP">
+    <button onclick="verifyOTP()">Verify OTP</button>
+    <p id="otpMessage"></p>
+</section>
+
+<section class="panel">
+    <h2>Choose Candidate</h2>
+    <select id="candidate">
+        <option value="Candidate A">Candidate A</option>
+        <option value="Candidate B">Candidate B</option>
+        <option value="Candidate C">Candidate C</option>
+    </select>
+
+    <button onclick="castVote()">Submit Vote</button>
+    <p id="voteMessage"></p>
+</section>
+
+<section id="admin" class="panel">
+    <h2>Admin - Add Candidate</h2>
+    <form onsubmit="addCandidate(event)">
+        <input id="newCandidate" placeholder="Candidate Name" required>
+        <button>Add Candidate</button>
+    </form>
+    <p id="adminMessage"></p>
+</section>
+
+<section id="results" class="panel">
+    <h2>Election Results (Demo)</h2>
+    <button onclick="showResults()">View Results</button>
+    <div id="resultList"></div>
+</section>
+
+<footer>VoteOnline © 2026</footer>
+
+<script>
+let loggedIn = false;
+let verified = false;
+let voted = false;
+let otp = "";
+let votes = {
+    "Candidate A": 0,
+    "Candidate B": 0,
+    "Candidate C": 0
+};
+
+function login(event) {
+    event.preventDefault();
+
+    let id = document.getElementById("voterId").value.trim();
+
+    if (id === "") return;
+
+    loggedIn = true;
+    verified = false;
+    voted = false;
+
+    document.getElementById("loginMessage").innerText =
+        "Demo login successful for " + id;
+}
+
+function generateOTP() {
+    if (!loggedIn) {
+        document.getElementById("otpMessage").innerText =
+            "Please log in first.";
+        return;
+    }
+
+    otp = String(Math.floor(1000 + Math.random() * 9000));
+    verified = false;
+
+    document.getElementById("otpDisplay").innerText =
+        "Demo OTP: " + otp;
+}
+
+function verifyOTP() {
+    if (loggedIn && otp !== "" &&
+        document.getElementById("otpInput").value === otp) {
+        verified = true;
+        document.getElementById("otpMessage").innerText =
+            "OTP verified successfully.";
+    } else {
+        document.getElementById("otpMessage").innerText =
+            "Invalid OTP or login required.";
+    }
+}
+
+function castVote() {
+    if (!loggedIn || !verified) {
+        document.getElementById("voteMessage").innerText =
+            "Please log in and verify OTP first.";
+        return;
+    }
+
+    if (voted) {
+        document.getElementById("voteMessage").innerText =
+            "You have already voted in this session.";
+        return;
+    }
+
+    let candidate = document.getElementById("candidate").value;
+
+    votes[candidate] = (votes[candidate] || 0) + 1;
+    voted = true;
+
+    document.getElementById("voteMessage").innerText =
+        "Demo vote submitted for " + candidate + ".";
+}
+
+function addCandidate(event) {
+    event.preventDefault();
+
+    let name = document.getElementById("newCandidate").value.trim();
+
+    if (name === "" || votes[name] !== undefined) {
+        document.getElementById("adminMessage").innerText =
+            "Enter a new candidate name.";
+        return;
+    }
+
+    votes[name] = 0;
+
+    let option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    document.getElementById("candidate").appendChild(option);
+
+    document.getElementById("adminMessage").innerText =
+        "Candidate added successfully.";
+
+    event.target.reset();
+}
+
+function showResults() {
+    let list = document.getElementById("resultList");
+    list.innerHTML = "";
+
+    for (let name in votes) {
+        list.innerHTML += "<p>" + name + ": " + votes[name] + " votes</p>";
+    }
+}
+</script>
+
+</body>
+</html>

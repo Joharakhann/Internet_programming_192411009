@@ -1,0 +1,78 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fc;
+    color: #333;
+}
+
+header {
+    background: #344e85;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+nav {
+    background: #22365f;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 12px;
+}
+
+.hero {
+    background: #dce6fa;
+    text-align: center;
+    padding: 35px;
+}
+
+section {
+    padding: 20px;
+}
+
+h2 {
+    color: #344e85;
+}
+
+.panel {
+    background: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px #ddd;
+}
+
+input, select {
+    padding: 10px;
+    margin: 8px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+button {
+    background: #344e85;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    background: #22365f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+@media (max-width: 600px) {
+    nav a {
+        display: inline-block;
+        margin: 7px;
+    }
+}

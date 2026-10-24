@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Navigator</title>
+    <link rel="stylesheet" href="cap2.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div>
+        <h1>Campus Navigator</h1>
+        <p>Smart Navigation & Accessibility Planner</p>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()">Change Theme</button>
+</header>
+
+<nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#planner">Plan Route</a>
+    <a href="#map">Campus Map</a>
+    <a href="#facilities">Facilities</a>
+</nav>
+
+<section class="welcome" id="dashboard">
+    <div>
+        <p class="tag">SMART CAMPUS SYSTEM</p>
+        <h2>Explore Your Campus Easily</h2>
+        <p>Find buildings, plan routes and discover accessible paths.</p>
+    </div>
+    <div class="welcome-icon">⌖</div>
+</section>
+
+<main>
+    <section class="stats">
+        <div class="stat-card">
+            <span>Campus Locations</span>
+            <h2>6</h2>
+            <p>Available places</p>
+        </div>
+        <div class="stat-card">
+            <span>Accessible Routes</span>
+            <h2>4+</h2>
+            <p>Sample route options</p>
+        </div>
+        <div class="stat-card">
+            <span>Navigation</span>
+            <h2>Easy</h2>
+            <p>Simple route planning</p>
+        </div>
+    </section>
+
+    <section class="layout">
+        <div class="panel" id="planner">
+            <h2>Plan Your Journey</h2>
+            <p class="muted">Choose your starting point and destination.</p>
+
+            <label for="search">Search campus location</label>
+            <input type="text" id="search"
+                   placeholder="Search library, lab, cafeteria..."
+                   oninput="searchLocation()">
+
+            <div id="searchResults"></div>
+
+            <label for="source">Starting Location</label>
+            <select id="source">
+                <option>Main Gate</option>
+                <option>Library</option>
+                <option>Computer Lab</option>
+                <option>Cafeteria</option>
+                <option>Auditorium</option>
+                <option>Administration Block</option>
+            </select>
+
+            <label for="destination">Destination</label>
+            <select id="destination">
+                <option>Library</option>
+                <option>Computer Lab</option>
+                <option>Cafeteria</option>
+                <option>Auditorium</option>
+                <option>Administration Block</option>
+                <option>Main Gate</option>
+            </select>
+
+            <div class="options">
+                <label class="check">
+                    <input type="checkbox" id="wheelchair">
+                    Wheelchair-friendly route
+                </label>
+
+                <label class="check">
+                    <input type="checkbox" id="avoidStairs">
+                    Avoid stairs
+                </label>
+            </div>
+
+            <button class="primary-btn" onclick="findRoute()">
+                Find Best Route
+            </button>
+
+            <button class="secondary-btn" onclick="resetPlanner()">
+                Reset
+            </button>
+
+            <div id="routeResult" aria-live="polite">
+                <p>Your route details will appear here.</p>
+            </div>
+        </div>
+
+        <div class="panel" id="map">
+            <h2>Campus Map Preview</h2>
+            <p class="muted">Select a location to highlight it.</p>
+
+            <div class="campus-map">
+                <div class="map-road road-one"></div>
+                <div class="map-road road-two"></div>
+
+                <button class="place gate" onclick="selectPlace('Main Gate')">
+                    Main Gate
+                </button>
+
+                <button class="place library" onclick="selectPlace('Library')">
+                    Library
+                </button>
+
+                <button class="place lab" onclick="selectPlace('Computer Lab')">
+                    Computer Lab
+                </button>
+
+                <button class="place cafe" onclick="selectPlace('Cafeteria')">
+                    Cafeteria
+                </button>
+
+                <button class="place hall" onclick="selectPlace('Auditorium')">
+                    Auditorium
+                </button>
+
+                <button class="place admin" onclick="selectPlace('Administration Block')">
+                    Admin Block
+                </button>
+            </div>
+
+            <p id="selectedPlace" class="map-note">
+                Click a building to select it as your destination.
+            </p>
+
+            <p class="notice">
+                Map is a sample campus layout, not a live geographic map.
+            </p>
+        </div>
+    </section>
+
+    <section class="panel" id="facilities">
+        <h2>Campus Facilities</h2>
+        <p class="muted">Browse facilities by category.</p>
+
+        <div class="filters">
+            <button onclick="filterFacilities('all')">All</button>
+            <button onclick="filterFacilities('study')">Study</button>
+            <button onclick="filterFacilities('food')">Food</button>
+            <button onclick="filterFacilities('service')">Services</button>
+        </div>
+
+        <div class="facility-grid">
+            <article class="facility" data-type="study">
+                <span class="facility-icon">LIB</span>
+                <h3>Library</h3>
+                <p>Books, journals and study spaces.</p>
+                <button onclick="setDestination('Library')">Navigate</button>
+            </article>
+
+            <article class="facility" data-type="study">
+                <span class="facility-icon">LAB</span>
+                <h3>Computer Lab</h3>
+                <p>Computers and practical learning.</p>
+                <button onclick="setDestination('Computer Lab')">Navigate</button>
+            </article>
+
+            <article class="facility" data-type="food">
+                <span class="facility-icon">CAF</span>
+                <h3>Cafeteria</h3>
+                <p>Food and refreshments.</p>
+                <button onclick="setDestination('Cafeteria')">Navigate</button>
+            </article>
+
+            <article class="facility" data-type="service">
+                <span class="facility-icon">ADM</span>
+                <h3>Administration Block</h3>
+                <p>Student and office services.</p>
+                <button onclick="setDestination('Administration Block')">Navigate</button>
+            </article>
+
+            <article class="facility" data-type="service">
+                <span class="facility-icon">AUD</span>
+                <h3>Auditorium</h3>
+                <p>Events and college programmes.</p>
+                <button onclick="setDestination('Auditorium')">Navigate</button>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Smart Campus Navigation System & Accessibility Planner</p>
+    <p>Academic Project Prototype</p>
+</footer>
+
+<script>
+    const places = [
+        "Main Gate",
+        "Library",
+        "Computer Lab",
+        "Cafeteria",
+        "Auditorium",
+        "Administration Block"
+    ];
+
+    // Sample distances in metres between campus locations
+    const distances = {
+        "Main Gate": {
+            "Library": 300,
+            "Computer Lab": 400,
+            "Cafeteria": 200,
+            "Auditorium": 350,
+            "Administration Block": 250
+        },
+        "Library": {
+            "Computer Lab": 150,
+            "Cafeteria": 180,
+            "Auditorium": 250,
+            "Administration Block": 200
+        },
+        "Computer Lab": {
+            "Cafeteria": 220,
+            "Auditorium": 180,
+            "Administration Block": 160
+        },
+        "Cafeteria": {
+            "Auditorium": 140,
+            "Administration Block": 190
+        },
+        "Auditorium": {
+            "Administration Block": 170
+        }
+    };
+
+    function getDistance(from, to) {
+        if (distances[from] && distances[from][to] !== undefined) {
+            return distances[from][to];
+        }
+
+        if (distances[to] && distances[to][from] !== undefined) {
+            return distances[to][from];
+        }
+
+        return null;
+    }
+
+    function findRoute() {
+        const source = document.getElementById("source").value;
+        const destination = document.getElementById("destination").value;
+        const wheelchair = document.getElementById("wheelchair").checked;
+        const avoidStairs = document.getElementById("avoidStairs").checked;
+        const result = document.getElementById("routeResult");
+
+        if (source === destination) {
+            result.innerHTML =
+                "<h3>Same Location</h3><p>Please choose a different destination.</p>";
+            return;
+        }
+
+        const distance = getDistance(source, destination);
+
+        if (distance === null) {
+            result.innerHTML =
+                "<h3>Route Unavailable</h3><p>Please try different locations.</p>";
+            return;
+        }
+
+        const extraDistance = wheelchair || avoidStairs ? 50 : 0;
+        const totalDistance = distance + extraDistance;
+        const time = Math.max(1, Math.ceil(totalDistance / 70));
+
+        let routeType = "Regular route";
+        if (wheelchair && avoidStairs) {
+            routeType = "Wheelchair-friendly; avoid stairs";
+        } else if (wheelchair) {
+            routeType = "Wheelchair-friendly preference";
+        } else if (avoidStairs) {
+            routeType = "Stair-avoidance preference";
+        }
+
+        result.innerHTML = `
+            <h3>Route Summary</h3>
+            <p><strong>From:</strong> ${source}</p>
+            <p><strong>To:</strong> ${destination}</p>
+            <p><strong>Distance:</strong> ${totalDistance} metres (estimated)</p>
+            <p><strong>Walking Time:</strong> ${time} minutes (estimated)</p>
+            <p><strong>Preference:</strong> ${routeType}</p>
+            <p class="route-path">Suggested path: ${source} → ${destination}</p>
+            <p class="notice">Sample estimate only. Accessibility and paths must be verified on campus.</p>
+        `;
+
+        document.getElementById("selectedPlace").textContent =
+            "Destination selected: " + destination;
+    }
+
+    function selectPlace(place) {
+        document.getElementById("destination").value = place;
+        document.getElementById("selectedPlace").textContent =
+            "Destination selected: " + place;
+        document.getElementById("search").value = "";
+        document.getElementById("searchResults").innerHTML = "";
+    }
+
+    function setDestination(place) {
+        document.getElementById("destination").value = place;
+        document.getElementById("planner").scrollIntoView({
+            behavior: "smooth"
+        });
+        document.getElementById("selectedPlace").textContent =
+            "Destination selected: " + place;
+    }
+
+    function searchLocation() {
+        const query = document.getElementById("search").value.toLowerCase();
+        const results = places.filter(place =>
+            place.toLowerCase().includes(query)
+        );
+
+        document.getElementById("searchResults").innerHTML =
+            query === "" ? "" :
+            results.length
+                ? results.map(place =>
+                    `<button class="search-item"
+                    onclick="selectPlace('${place}')">${place}</button>`
+                  ).join("")
+                : "<p>No matching locations found.</p>";
+    }
+
+    function filterFacilities(type) {
+        document.querySelectorAll(".facility").forEach(item => {
+            item.style.display =
+                type === "all" || item.dataset.type === type
+                ? "block" : "none";
+        });
+    }
+
+    function resetPlanner() {
+        document.getElementById("source").selectedIndex = 0;
+        document.getElementById("destination").selectedIndex = 0;
+        document.getElementById("wheelchair").checked = false;
+        document.getElementById("avoidStairs").checked = false;
+        document.getElementById("search").value = "";
+        document.getElementById("searchResults").innerHTML = "";
+        document.getElementById("routeResult").innerHTML =
+            "<p>Your route details will appear here.</p>";
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+    }
+</script>
+
+</body>
+</html>
